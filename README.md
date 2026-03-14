@@ -95,6 +95,17 @@ Or double-click `AIStash.xcodeproj` in Finder.
 
 The app will launch with sample seed data pre-populated so you can explore all features immediately.
 
+> **Distribution note:** Current GitHub builds are not yet signed and notarized with Apple Developer ID. If you download a packaged app, macOS may show a warning such as `Apple could not verify "AIStash" is free of malware that may harm your Mac or compromise your privacy.`
+>
+> **How to bypass it for now**
+> 1. Try opening `AIStash.app` once and let macOS block it.
+> 2. Open **System Settings > Privacy & Security**.
+> 3. Scroll to the security section near the bottom.
+> 4. Find the message about `AIStash` being blocked and click **Open Anyway**.
+> 5. Confirm by clicking **Open** in the follow-up dialog.
+>
+> You can also try **Control-click > Open** on the app in Finder, then choose **Open** from the dialog. This warning will go away once the app is distributed with proper Apple signing and notarization.
+
 ### 4. Run tests
 
 ```bash
