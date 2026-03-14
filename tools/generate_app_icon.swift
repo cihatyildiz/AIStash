@@ -44,12 +44,12 @@ func makePNGData(dimension: Int) -> Data {
 
     let inset = CGFloat(dimension) * 0.08
     let baseRect = rect.insetBy(dx: inset, dy: inset)
-    let cornerRadius = CGFloat(dimension) * 0.22
+    let cornerRadius = CGFloat(dimension) * 0.23
     let basePath = NSBezierPath(roundedRect: baseRect, xRadius: cornerRadius, yRadius: cornerRadius)
 
     let gradient = NSGradient(colors: [
-        NSColor(calibratedRed: 0.17, green: 0.50, blue: 0.93, alpha: 1.0),
-        NSColor(calibratedRed: 0.05, green: 0.33, blue: 0.82, alpha: 1.0),
+        NSColor(calibratedRed: 0.97, green: 0.83, blue: 0.46, alpha: 1.0),
+        NSColor(calibratedRed: 0.90, green: 0.55, blue: 0.19, alpha: 1.0),
     ])!
     gradient.draw(in: basePath, angle: 90)
 
@@ -57,88 +57,128 @@ func makePNGData(dimension: Int) -> Data {
     basePath.addClip()
 
     let glowRect = NSRect(
-        x: baseRect.minX - CGFloat(dimension) * 0.10,
-        y: baseRect.midY + CGFloat(dimension) * 0.02,
-        width: baseRect.width * 1.28,
-        height: baseRect.height * 0.78
+        x: baseRect.minX - CGFloat(dimension) * 0.16,
+        y: baseRect.midY + CGFloat(dimension) * 0.16,
+        width: baseRect.width * 1.34,
+        height: baseRect.height * 0.70
     )
     let glowPath = NSBezierPath(ovalIn: glowRect)
-    NSColor(calibratedRed: 0.79, green: 0.93, blue: 1.0, alpha: 0.22).setFill()
+    NSColor(calibratedRed: 1.0, green: 0.96, blue: 0.86, alpha: 0.35).setFill()
     glowPath.fill()
 
-    let accentWidth = CGFloat(dimension) * 0.16
-    let accentRect = NSRect(
-        x: baseRect.maxX - accentWidth * 1.22,
-        y: baseRect.minY + CGFloat(dimension) * 0.14,
-        width: accentWidth,
-        height: baseRect.height * 0.72
+    let groundRect = NSRect(
+        x: baseRect.minX + CGFloat(dimension) * 0.12,
+        y: baseRect.minY + CGFloat(dimension) * 0.12,
+        width: baseRect.width * 0.76,
+        height: CGFloat(dimension) * 0.12
     )
-    let accentPath = NSBezierPath(roundedRect: accentRect, xRadius: accentWidth * 0.45, yRadius: accentWidth * 0.45)
-    NSColor(calibratedRed: 0.48, green: 0.87, blue: 0.95, alpha: 0.98).setFill()
-    accentPath.fill()
-
-    let shelfRect = NSRect(
-        x: baseRect.minX + CGFloat(dimension) * 0.14,
-        y: baseRect.minY + CGFloat(dimension) * 0.18,
-        width: baseRect.width * 0.62,
-        height: CGFloat(dimension) * 0.08
-    )
-    let shelfPath = NSBezierPath(roundedRect: shelfRect, xRadius: shelfRect.height / 2, yRadius: shelfRect.height / 2)
-    NSColor.white.withAlphaComponent(0.12).setFill()
-    shelfPath.fill()
+    let groundPath = NSBezierPath(roundedRect: groundRect, xRadius: groundRect.height / 2, yRadius: groundRect.height / 2)
+    NSColor.black.withAlphaComponent(0.12).setFill()
+    groundPath.fill()
 
     NSGraphicsContext.current?.restoreGraphicsState()
 
-    let lineWidth = max(2, CGFloat(dimension) * 0.048)
-    let lineColor = NSColor.white
-    let topY = baseRect.maxY - CGFloat(dimension) * 0.26
-    let bottomY = baseRect.minY + CGFloat(dimension) * 0.28
-    let midY = baseRect.midY + CGFloat(dimension) * 0.01
+    let bucketWidth = CGFloat(dimension) * 0.50
+    let bucketHeight = CGFloat(dimension) * 0.40
+    let bucketRect = NSRect(
+        x: rect.midX - bucketWidth / 2,
+        y: baseRect.minY + CGFloat(dimension) * 0.22,
+        width: bucketWidth,
+        height: bucketHeight
+    )
+    let bucketTopWidth = bucketWidth * 0.82
+    let bucketLipHeight = CGFloat(dimension) * 0.10
+    let bucketTopX = rect.midX - bucketTopWidth / 2
+    let bucketTopY = bucketRect.maxY - bucketLipHeight * 0.30
 
-    let aLeftX = baseRect.minX + CGFloat(dimension) * 0.22
-    let aWidth = CGFloat(dimension) * 0.24
-    let aApexX = aLeftX + aWidth * 0.5
+    let bucketBody = NSBezierPath()
+    bucketBody.move(to: NSPoint(x: bucketRect.minX + bucketWidth * 0.12, y: bucketRect.minY))
+    bucketBody.line(to: NSPoint(x: bucketRect.maxX - bucketWidth * 0.12, y: bucketRect.minY))
+    bucketBody.line(to: NSPoint(x: bucketTopX + bucketTopWidth * 0.96, y: bucketTopY))
+    bucketBody.line(to: NSPoint(x: bucketTopX + bucketTopWidth * 0.04, y: bucketTopY))
+    bucketBody.close()
 
-    let aPath = NSBezierPath()
-    aPath.lineWidth = lineWidth
-    aPath.lineCapStyle = .round
-    aPath.lineJoinStyle = .round
-    aPath.move(to: NSPoint(x: aLeftX, y: bottomY))
-    aPath.line(to: NSPoint(x: aApexX, y: topY))
-    aPath.line(to: NSPoint(x: aLeftX + aWidth, y: bottomY))
-    aPath.move(to: NSPoint(x: aLeftX + aWidth * 0.23, y: midY))
-    aPath.line(to: NSPoint(x: aLeftX + aWidth * 0.77, y: midY))
-    lineColor.setStroke()
-    aPath.stroke()
+    let bucketGradient = NSGradient(colors: [
+        NSColor(calibratedRed: 0.27, green: 0.46, blue: 0.82, alpha: 1.0),
+        NSColor(calibratedRed: 0.11, green: 0.27, blue: 0.61, alpha: 1.0),
+    ])!
+    bucketGradient.draw(in: bucketBody, angle: -90)
 
-    let sRect = NSRect(
-        x: baseRect.minX + CGFloat(dimension) * 0.45,
-        y: baseRect.minY + CGFloat(dimension) * 0.28,
-        width: CGFloat(dimension) * 0.21,
-        height: CGFloat(dimension) * 0.40
+    let bucketTopRect = NSRect(
+        x: bucketTopX,
+        y: bucketTopY - bucketLipHeight * 0.34,
+        width: bucketTopWidth,
+        height: bucketLipHeight
     )
-    let sPath = NSBezierPath()
-    sPath.lineWidth = lineWidth
-    sPath.lineCapStyle = .round
-    sPath.lineJoinStyle = .round
-    sPath.move(to: NSPoint(x: sRect.maxX, y: sRect.maxY - sRect.height * 0.06))
-    sPath.curve(
-        to: NSPoint(x: sRect.minX + sRect.width * 0.18, y: sRect.midY + sRect.height * 0.10),
-        controlPoint1: NSPoint(x: sRect.minX + sRect.width * 0.64, y: sRect.maxY),
-        controlPoint2: NSPoint(x: sRect.minX - sRect.width * 0.02, y: sRect.maxY * 0.98)
+    let bucketTopPath = NSBezierPath(ovalIn: bucketTopRect)
+    NSColor(calibratedRed: 0.72, green: 0.87, blue: 1.0, alpha: 0.95).setFill()
+    bucketTopPath.fill()
+
+    let bucketInnerRect = bucketTopRect.insetBy(dx: bucketTopRect.width * 0.12, dy: bucketTopRect.height * 0.22)
+    let bucketInnerPath = NSBezierPath(ovalIn: bucketInnerRect)
+    NSColor(calibratedRed: 0.08, green: 0.18, blue: 0.43, alpha: 0.75).setFill()
+    bucketInnerPath.fill()
+
+    let handleWidth = bucketTopWidth * 0.88
+    let handleRect = NSRect(
+        x: rect.midX - handleWidth / 2,
+        y: bucketTopY + CGFloat(dimension) * 0.01,
+        width: handleWidth,
+        height: bucketHeight * 0.70
     )
-    sPath.curve(
-        to: NSPoint(x: sRect.maxX - sRect.width * 0.08, y: sRect.midY - sRect.height * 0.04),
-        controlPoint1: NSPoint(x: sRect.minX + sRect.width * 0.05, y: sRect.midY - sRect.height * 0.04),
-        controlPoint2: NSPoint(x: sRect.maxX - sRect.width * 0.12, y: sRect.midY + sRect.height * 0.06)
+    let handlePath = NSBezierPath()
+    handlePath.lineWidth = max(2, CGFloat(dimension) * 0.035)
+    handlePath.lineCapStyle = .round
+    handlePath.move(to: NSPoint(x: handleRect.minX, y: handleRect.minY + handleRect.height * 0.40))
+    handlePath.curve(
+        to: NSPoint(x: handleRect.maxX, y: handleRect.minY + handleRect.height * 0.40),
+        controlPoint1: NSPoint(x: handleRect.minX, y: handleRect.maxY),
+        controlPoint2: NSPoint(x: handleRect.maxX, y: handleRect.maxY)
     )
-    sPath.curve(
-        to: NSPoint(x: sRect.minX, y: sRect.minY + sRect.height * 0.02),
-        controlPoint1: NSPoint(x: sRect.maxX, y: sRect.minY + sRect.height * 0.02),
-        controlPoint2: NSPoint(x: sRect.minX + sRect.width * 0.44, y: sRect.minY - sRect.height * 0.06)
+    NSColor.white.withAlphaComponent(0.72).setStroke()
+    handlePath.stroke()
+
+    let textShadow = NSShadow()
+    textShadow.shadowOffset = NSSize(width: 0, height: -CGFloat(dimension) * 0.018)
+    textShadow.shadowBlurRadius = CGFloat(dimension) * 0.035
+    textShadow.shadowColor = NSColor.black.withAlphaComponent(0.18)
+
+    let textParagraph = NSMutableParagraphStyle()
+    textParagraph.alignment = .center
+
+    let fontSize = CGFloat(dimension) * 0.24
+    let textAttributes: [NSAttributedString.Key: Any] = [
+        .font: NSFont.systemFont(ofSize: fontSize, weight: .black),
+        .foregroundColor: NSColor.white,
+        .paragraphStyle: textParagraph,
+        .shadow: textShadow,
+    ]
+
+    let textRect = NSRect(
+        x: bucketRect.minX - CGFloat(dimension) * 0.01,
+        y: bucketRect.midY - CGFloat(dimension) * 0.01,
+        width: bucketRect.width,
+        height: fontSize * 1.2
     )
-    lineColor.setStroke()
-    sPath.stroke()
+    "AI".draw(in: textRect, withAttributes: textAttributes)
+
+    let sparkleColor = NSColor.white.withAlphaComponent(0.84)
+    let sparkleLineWidth = max(1.5, CGFloat(dimension) * 0.016)
+    for center in [
+        NSPoint(x: rect.midX - CGFloat(dimension) * 0.18, y: bucketTopY + CGFloat(dimension) * 0.16),
+        NSPoint(x: rect.midX + CGFloat(dimension) * 0.20, y: bucketTopY + CGFloat(dimension) * 0.13),
+    ] {
+        let sparkle = NSBezierPath()
+        sparkle.lineWidth = sparkleLineWidth
+        sparkle.lineCapStyle = .round
+        let radius = CGFloat(dimension) * 0.026
+        sparkle.move(to: NSPoint(x: center.x, y: center.y - radius))
+        sparkle.line(to: NSPoint(x: center.x, y: center.y + radius))
+        sparkle.move(to: NSPoint(x: center.x - radius, y: center.y))
+        sparkle.line(to: NSPoint(x: center.x + radius, y: center.y))
+        sparkleColor.setStroke()
+        sparkle.stroke()
+    }
 
     let outline = NSBezierPath(roundedRect: baseRect, xRadius: cornerRadius, yRadius: cornerRadius)
     outline.lineWidth = max(1, CGFloat(dimension) * 0.012)
