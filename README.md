@@ -15,10 +15,10 @@ AIStash is a local-first, open-source macOS desktop application for managing you
 │  AIStash                                                            │
 ├──────────────┬──────────────────────┬───────────────────────────────┤
 │  Library     │  All Assets    [+]   │  System Prompt: Helpful…      │
-│  ─────────── │  ─────────────────── │  ─────────────────────────── │
-│  All Assets  │  🔵 System Prompt…   │  Type: [Prompt ▾]  ★ Fav     │
+│  ─────────── │  ─────────────────── │  ───────────────────────────  │
+│  All Assets  │  🔵 System Prompt…   │  Type: [Prompt ▾]  ★ Fav      │
 │  ★ Favorites │  🟢 Python Tool…     │  Folder: [Prompts ▾]          │
-│  Archive     │  🟣 RAG Q&A Agent    │  Tags: [gpt-4o] [+]          │
+│  Archive     │  🟣 RAG Q&A Agent    │  Tags: [gpt-4o] [+]           │
 │              │  🟠 Code Review…     │                               │
 │  Folders     │  🔵 Chain-of-Tho…    │  Content                      │
 │  ─────────── │                      │  ┌─────────────────────────┐  │
