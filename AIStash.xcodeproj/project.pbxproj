@@ -1,0 +1,390 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* AIStashApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* AIStashApp.swift */; };
+		A10000000000000000000002 /* AppCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* AppCommands.swift */; };
+		A10000000000000000000003 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* Asset.swift */; };
+		A10000000000000000000004 /* Asset+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* Asset+Hashable.swift */; };
+		A10000000000000000000005 /* AssetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* AssetType.swift */; };
+		A10000000000000000000006 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* Folder.swift */; };
+		A10000000000000000000007 /* SeedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* SeedData.swift */; };
+		A10000000000000000000008 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* Tag.swift */; };
+		A10000000000000000000009 /* Tag+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* Tag+Hashable.swift */; };
+		A1000000000000000000000A /* ImportExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* ImportExportService.swift */; };
+		A1000000000000000000000B /* AssetDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B /* AssetDetailViewModel.swift */; };
+		A1000000000000000000000C /* AssetListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C /* AssetListViewModel.swift */; };
+		A1000000000000000000000D /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D /* SidebarViewModel.swift */; };
+		A1000000000000000000000E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000E /* ContentView.swift */; };
+		A1000000000000000000000F /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000F /* SidebarView.swift */; };
+		A10000000000000000000010 /* AssetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* AssetListView.swift */; };
+		A10000000000000000000011 /* AssetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011 /* AssetRowView.swift */; };
+		A10000000000000000000012 /* AssetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012 /* AssetDetailView.swift */; };
+		A10000000000000000000013 /* MetadataEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000013 /* MetadataEditorView.swift */; };
+		A10000000000000000000014 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000014 /* SearchBar.swift */; };
+		A10000000000000000000015 /* FilterPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000015 /* FilterPanel.swift */; };
+		A10000000000000000000016 /* ImportExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000016 /* ImportExportView.swift */; };
+		A10000000000000000000017 /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000017 /* Color+Hex.swift */; };
+		A10000000000000000000018 /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000018 /* PreviewData.swift */; };
+		A10000000000000000000019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000001B /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000001 /* AIStashApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIStashApp.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
+		A20000000000000000000003 /* Asset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		A20000000000000000000004 /* Asset+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Asset+Hashable.swift"; sourceTree = "<group>"; };
+		A20000000000000000000005 /* AssetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetType.swift; sourceTree = "<group>"; };
+		A20000000000000000000006 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		A20000000000000000000007 /* SeedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedData.swift; sourceTree = "<group>"; };
+		A20000000000000000000008 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		A20000000000000000000009 /* Tag+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+Hashable.swift"; sourceTree = "<group>"; };
+		A2000000000000000000000A /* ImportExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportExportService.swift; sourceTree = "<group>"; };
+		A2000000000000000000000B /* AssetDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetDetailViewModel.swift; sourceTree = "<group>"; };
+		A2000000000000000000000C /* AssetListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListViewModel.swift; sourceTree = "<group>"; };
+		A2000000000000000000000D /* SidebarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewModel.swift; sourceTree = "<group>"; };
+		A2000000000000000000000E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A2000000000000000000000F /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		A20000000000000000000010 /* AssetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetListView.swift; sourceTree = "<group>"; };
+		A20000000000000000000011 /* AssetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetRowView.swift; sourceTree = "<group>"; };
+		A20000000000000000000012 /* AssetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetDetailView.swift; sourceTree = "<group>"; };
+		A20000000000000000000013 /* MetadataEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataEditorView.swift; sourceTree = "<group>"; };
+		A20000000000000000000014 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		A20000000000000000000015 /* FilterPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPanel.swift; sourceTree = "<group>"; };
+		A20000000000000000000016 /* ImportExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportExportView.swift; sourceTree = "<group>"; };
+		A20000000000000000000017 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		A20000000000000000000018 /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
+		A20000000000000000000019 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2000000000000000000001A /* AIStash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AIStash.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000000000000000000001B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A30000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A30000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000019 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXGroup section */
+		A40000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A40000000000000000000002 /* AIStash */,
+				A4000000000000000000000A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A40000000000000000000002 /* AIStash */ = {
+			isa = PBXGroup;
+			children = (
+				A40000000000000000000003 /* App */,
+				A40000000000000000000004 /* Models */,
+				A40000000000000000000005 /* Services */,
+				A40000000000000000000006 /* ViewModels */,
+				A40000000000000000000007 /* Views */,
+				A40000000000000000000009 /* Resources */,
+			);
+			path = AIStash;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000003 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000001 /* AIStashApp.swift */,
+				A20000000000000000000002 /* AppCommands.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000003 /* Asset.swift */,
+				A20000000000000000000004 /* Asset+Hashable.swift */,
+				A20000000000000000000005 /* AssetType.swift */,
+				A20000000000000000000006 /* Folder.swift */,
+				A20000000000000000000007 /* SeedData.swift */,
+				A20000000000000000000008 /* Tag.swift */,
+				A20000000000000000000009 /* Tag+Hashable.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000005 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000000A /* ImportExportService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000006 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000000B /* AssetDetailViewModel.swift */,
+				A2000000000000000000000C /* AssetListViewModel.swift */,
+				A2000000000000000000000D /* SidebarViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A4000000000000000000000B /* Main */,
+				A4000000000000000000000C /* AssetList */,
+				A4000000000000000000000D /* AssetDetail */,
+				A4000000000000000000000E /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000009 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000019 /* Info.plist */,
+				A2000000000000000000001B /* Assets.xcassets */,
+				A20000000000000000000018 /* PreviewData.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A4000000000000000000000A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000001A /* AIStash.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A4000000000000000000000B /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000000E /* ContentView.swift */,
+				A2000000000000000000000F /* SidebarView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		A4000000000000000000000C /* AssetList */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000010 /* AssetListView.swift */,
+				A20000000000000000000011 /* AssetRowView.swift */,
+			);
+			path = AssetList;
+			sourceTree = "<group>";
+		};
+		A4000000000000000000000D /* AssetDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000012 /* AssetDetailView.swift */,
+				A20000000000000000000013 /* MetadataEditorView.swift */,
+			);
+			path = AssetDetail;
+			sourceTree = "<group>";
+		};
+		A4000000000000000000000E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000014 /* SearchBar.swift */,
+				A20000000000000000000015 /* FilterPanel.swift */,
+				A20000000000000000000016 /* ImportExportView.swift */,
+				A20000000000000000000017 /* Color+Hex.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A50000000000000000000001 /* AIStash */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000001 /* Build configuration list for PBXNativeTarget "AIStash" */;
+			buildPhases = (
+				A30000000000000000000002 /* Sources */,
+				A30000000000000000000001 /* Frameworks */,
+				A30000000000000000000003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AIStash;
+			productName = AIStash;
+			productReference = A2000000000000000000001A /* AIStash.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A60000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					A50000000000000000000001 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+				};
+			};
+			buildConfigurationList = A70000000000000000000002 /* Build configuration list for PBXProject "AIStash" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A40000000000000000000001;
+			productRefGroup = A4000000000000000000000A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A50000000000000000000001 /* AIStash */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A30000000000000000000002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* AIStashApp.swift in Sources */,
+				A10000000000000000000002 /* AppCommands.swift in Sources */,
+				A10000000000000000000003 /* Asset.swift in Sources */,
+				A10000000000000000000004 /* Asset+Hashable.swift in Sources */,
+				A10000000000000000000005 /* AssetType.swift in Sources */,
+				A10000000000000000000006 /* Folder.swift in Sources */,
+				A10000000000000000000007 /* SeedData.swift in Sources */,
+				A10000000000000000000008 /* Tag.swift in Sources */,
+				A10000000000000000000009 /* Tag+Hashable.swift in Sources */,
+				A1000000000000000000000A /* ImportExportService.swift in Sources */,
+				A1000000000000000000000B /* AssetDetailViewModel.swift in Sources */,
+				A1000000000000000000000C /* AssetListViewModel.swift in Sources */,
+				A1000000000000000000000D /* SidebarViewModel.swift in Sources */,
+				A1000000000000000000000E /* ContentView.swift in Sources */,
+				A1000000000000000000000F /* SidebarView.swift in Sources */,
+				A10000000000000000000010 /* AssetListView.swift in Sources */,
+				A10000000000000000000011 /* AssetRowView.swift in Sources */,
+				A10000000000000000000012 /* AssetDetailView.swift in Sources */,
+				A10000000000000000000013 /* MetadataEditorView.swift in Sources */,
+				A10000000000000000000014 /* SearchBar.swift in Sources */,
+				A10000000000000000000015 /* FilterPanel.swift in Sources */,
+				A10000000000000000000016 /* ImportExportView.swift in Sources */,
+				A10000000000000000000017 /* Color+Hex.swift in Sources */,
+				A10000000000000000000018 /* PreviewData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A80000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AIStash/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cihatyildiz.AIStash;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A80000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = AIStash/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cihatyildiz.AIStash;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A80000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+			};
+			name = Debug;
+		};
+		A80000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A70000000000000000000001 /* Build configuration list for PBXNativeTarget "AIStash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A80000000000000000000001 /* Debug */,
+				A80000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000002 /* Build configuration list for PBXProject "AIStash" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A80000000000000000000003 /* Debug */,
+				A80000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A60000000000000000000001 /* Project object */;
+}
