@@ -104,6 +104,7 @@ public final class AssetListViewModel {
     }
 
     public func deleteAsset(_ asset: Asset, in context: ModelContext) {
+        guard asset.isLocked != true else { return }
         if selectedAsset?.id == asset.id {
             selectedAsset = nil
         }
@@ -121,6 +122,11 @@ public final class AssetListViewModel {
         if asset.isArchived && selectedAsset?.id == asset.id {
             selectedAsset = nil
         }
+    }
+
+    public func toggleLock(_ asset: Asset) {
+        asset.isLocked = !(asset.isLocked ?? false)
+        asset.touch()
     }
 
     // MARK: - Filter Helpers

@@ -40,6 +40,12 @@ struct AssetRowView: View {
                         .font(.caption2)
                         .foregroundStyle(.yellow)
                 }
+
+                if asset.isLocked == true {
+                    Image(systemName: "lock.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             // Row 2: Content preview

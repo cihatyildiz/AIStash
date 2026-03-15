@@ -74,6 +74,7 @@ struct AssetDetailView: View {
             ToolbarItemGroup(placement: .primaryAction) {
                 favoriteButton(asset)
                 archiveButton(asset)
+                lockButton(asset)
             }
         }
     }
@@ -124,6 +125,15 @@ struct AssetDetailView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
                     .background(.secondary.opacity(0.1), in: Capsule())
+            }
+
+            if asset.isLocked == true {
+                Label("Locked", systemImage: "lock.fill")
+                    .font(.caption)
+                    .foregroundStyle(.blue)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(.blue.opacity(0.1), in: Capsule())
             }
 
             Spacer()
@@ -290,5 +300,15 @@ struct AssetDetailView: View {
             Image(systemName: asset.isArchived ? "arrow.uturn.up" : "archivebox")
         }
         .help(asset.isArchived ? "Unarchive" : "Archive")
+    }
+
+    private func lockButton(_ asset: Asset) -> some View {
+        Button {
+            asset.isLocked = !(asset.isLocked ?? false)
+            asset.touch()
+        } label: {
+            Image(systemName: asset.isLocked == true ? "lock.fill" : "lock.open")
+        }
+        .help(asset.isLocked == true ? "Unlock deletion protection" : "Lock from deletion")
     }
 }

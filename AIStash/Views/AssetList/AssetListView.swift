@@ -230,11 +230,21 @@ struct AssetListView: View {
             )
         }
 
+        Button {
+            viewModel.toggleLock(asset)
+        } label: {
+            Label(
+                asset.isLocked == true ? "Unlock from Deletion" : "Lock from Deletion",
+                systemImage: asset.isLocked == true ? "lock.open" : "lock"
+            )
+        }
+
         Divider()
 
         Button("Delete", role: .destructive) {
             viewModel.deleteAsset(asset, in: context)
         }
+        .disabled(asset.isLocked == true)
     }
 
     // MARK: - Sorting

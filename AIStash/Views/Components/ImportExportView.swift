@@ -14,6 +14,14 @@ import UniformTypeIdentifiers
 import AIStashCore
 #endif
 
+enum ImportExportLaunchAction {
+    case none
+    case saveLibrary
+    case openLibrary
+    case exportAssets
+    case importAssets
+}
+
 struct ImportExportView: View {
 
     @Environment(\.dismiss) private var dismiss
@@ -29,6 +37,16 @@ struct ImportExportView: View {
     @State private var alertMessage: String? = nil
     @State private var showAlert: Bool = false
     @State private var importResult: ImportResult? = nil
+    @State private var replaceResult: ReplaceImportResult? = nil
+    @State private var pendingReplacementURL: URL? = nil
+    @State private var showReplaceConfirmation: Bool = false
+    @State private var didPerformLaunchAction: Bool = false
+
+    private let launchAction: ImportExportLaunchAction
+
+    init(launchAction: ImportExportLaunchAction = .none) {
+        self.launchAction = launchAction
+    }
 
     // MARK: - Body
 
@@ -67,6 +85,33 @@ struct ImportExportView: View {
 
             Divider()
 
+            VStack(alignment: .leading, spacing: 10) {
+                Label("Library Files", systemImage: "externaldrive.fill.badge.icloud")
+                    .font(.headline)
+
+                Text("Save the entire library to a file, or replace the current library by opening a previously saved file.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+
+                HStack {
+                    Button {
+                        prepareLibrarySave()
+                    } label: {
+                        Label("Save Library As…", systemImage: "externaldrive.badge.plus")
+                    }
+                    .buttonStyle(.borderedProminent)
+
+                    Button {
+                        isImporting = true
+                    } label: {
+                        Label("Open Library…", systemImage: "folder")
+                    }
+                    .buttonStyle(.bordered)
+                }
+            }
+
+            Divider()
+
             // Import Section
             VStack(alignment: .leading, spacing: 10) {
                 Label("Import", systemImage: "square.and.arrow.down")
@@ -96,16 +141,27 @@ struct ImportExportView: View {
                 .background(.green.opacity(0.1), in: RoundedRectangle(cornerRadius: 8))
             }
 
+            if let result = replaceResult {
+                HStack(spacing: 8) {
+                    Image(systemName: "externaldrive.fill.badge.checkmark")
+                        .foregroundStyle(.green)
+                    Text("Loaded library file. Replaced \(result.deletedAssets) asset\(result.deletedAssets == 1 ? "" : "s"), \(result.deletedFolders) folder\(result.deletedFolders == 1 ? "" : "s"), and \(result.deletedTags) tag\(result.deletedTags == 1 ? "" : "s"), then loaded \(result.insertedAssets) asset\(result.insertedAssets == 1 ? "" : "s").")
+                        .font(.callout)
+                }
+                .padding(10)
+                .background(.green.opacity(0.1), in: RoundedRectangle(cornerRadius: 8))
+            }
+
             Spacer()
         }
         .padding(24)
-        .frame(width: 460, height: 400)
+        .frame(width: 520, height: 500)
         // File exporter
         .fileExporter(
             isPresented: $isExporting,
             document: exportDocument,
             contentType: .json,
-            defaultFilename: "AIStash-Export-\(Date().formatted(.iso8601.year().month().day()))"
+            defaultFilename: "AIStash-Library-\(Date().formatted(.iso8601.year().month().day()))"
         ) { result in
             switch result {
             case .success:
@@ -125,16 +181,55 @@ struct ImportExportView: View {
             switch result {
             case .success(let urls):
                 guard let url = urls.first else { return }
-                performImport(from: url)
+                pendingReplacementURL = url
+                showReplaceConfirmation = true
             case .failure(let error):
                 alertMessage = "Could not open file: \(error.localizedDescription)"
                 showAlert = true
             }
         }
+        .confirmationDialog(
+            "Replace Current Library?",
+            isPresented: $showReplaceConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button("Open as New Library", role: .destructive) {
+                if let url = pendingReplacementURL {
+                    performLibraryOpen(from: url)
+                }
+                pendingReplacementURL = nil
+            }
+
+            Button("Import and Merge Instead") {
+                if let url = pendingReplacementURL {
+                    performImport(from: url)
+                }
+                pendingReplacementURL = nil
+            }
+
+            Button("Cancel", role: .cancel) {
+                pendingReplacementURL = nil
+            }
+        } message: {
+            Text("Opening a library file will replace the current assets, folders, and tags in this local database.")
+        }
         .alert("AIStash", isPresented: $showAlert) {
             Button("OK") {}
         } message: {
             Text(alertMessage ?? "")
+        }
+        .onAppear {
+            guard !didPerformLaunchAction else { return }
+            didPerformLaunchAction = true
+
+            switch launchAction {
+            case .none:
+                break
+            case .saveLibrary, .exportAssets:
+                prepareLibrarySave()
+            case .openLibrary, .importAssets:
+                isImporting = true
+            }
         }
     }
 
@@ -155,6 +250,12 @@ struct ImportExportView: View {
         }
     }
 
+    private func prepareLibrarySave() {
+        replaceResult = nil
+        importResult = nil
+        prepareExport()
+    }
+
     private func performImport(from url: URL) {
         guard url.startAccessingSecurityScopedResource() else {
             alertMessage = "Permission denied to access the file."
@@ -165,10 +266,32 @@ struct ImportExportView: View {
 
         do {
             let data = try Data(contentsOf: url)
+            replaceResult = nil
             let result = try ImportExportService.shared.importBundle(from: data, into: context)
             importResult = result
         } catch {
             alertMessage = "Import failed: \(error.localizedDescription)"
+            showAlert = true
+        }
+    }
+
+    private func performLibraryOpen(from url: URL) {
+        guard url.startAccessingSecurityScopedResource() else {
+            alertMessage = "Permission denied to access the file."
+            showAlert = true
+            return
+        }
+        defer { url.stopAccessingSecurityScopedResource() }
+
+        do {
+            let data = try Data(contentsOf: url)
+            importResult = nil
+            let result = try ImportExportService.shared.replaceLibrary(from: data, into: context)
+            replaceResult = result
+            alertMessage = "Library loaded from \(url.lastPathComponent)."
+            showAlert = true
+        } catch {
+            alertMessage = "Open library failed: \(error.localizedDescription)"
             showAlert = true
         }
     }

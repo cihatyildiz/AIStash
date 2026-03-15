@@ -24,6 +24,7 @@ public struct AssetDTO: Codable {
     var modificationDate: Date
     var isFavorite: Bool
     var isArchived: Bool
+    var isLocked: Bool
     var folderID: UUID?
     var folderName: String?
     var tagIDs: [UUID]
@@ -77,6 +78,7 @@ public final class ImportExportService {
                 modificationDate: asset.modificationDate,
                 isFavorite: asset.isFavorite,
                 isArchived: asset.isArchived,
+                isLocked: asset.isLocked ?? false,
                 folderID: asset.folder?.id,
                 folderName: asset.folder?.name,
                 tagIDs: asset.tags.map(\.id),
@@ -159,6 +161,7 @@ public final class ImportExportService {
                 type: AssetType(rawValue: dto.type) ?? .note,
                 isFavorite: dto.isFavorite,
                 isArchived: dto.isArchived,
+                isLocked: dto.isLocked,
                 folder: dto.folderID.flatMap { folderMapByID[$0] } ?? dto.folderName.flatMap { folderMap[$0] },
                 tags: {
                     if !dto.tagIDs.isEmpty {
@@ -178,6 +181,31 @@ public final class ImportExportService {
         try context.save()
         return ImportResult(inserted: inserted, skipped: skipped)
     }
+
+    /// Replaces the current library contents with the contents of a JSON bundle.
+    @discardableResult
+    public func replaceLibrary(from data: Data, into context: ModelContext) throws -> ReplaceImportResult {
+        let existingAssets = (try? context.fetch(FetchDescriptor<Asset>())) ?? []
+        let existingFolders = (try? context.fetch(FetchDescriptor<Folder>())) ?? []
+        let existingTags = (try? context.fetch(FetchDescriptor<Tag>())) ?? []
+
+        let deletedAssetCount = existingAssets.count
+        let deletedFolderCount = existingFolders.count
+        let deletedTagCount = existingTags.count
+
+        existingAssets.forEach { context.delete($0) }
+        existingFolders.forEach { context.delete($0) }
+        existingTags.forEach { context.delete($0) }
+        try context.save()
+
+        let importResult = try importBundle(from: data, into: context)
+        return ReplaceImportResult(
+            deletedAssets: deletedAssetCount,
+            deletedFolders: deletedFolderCount,
+            deletedTags: deletedTagCount,
+            insertedAssets: importResult.inserted
+        )
+    }
 }
 
 // MARK: - Import Result
@@ -185,4 +213,11 @@ public final class ImportExportService {
 public struct ImportResult {
     public let inserted: Int
     public let skipped: Int
+}
+
+public struct ReplaceImportResult {
+    public let deletedAssets: Int
+    public let deletedFolders: Int
+    public let deletedTags: Int
+    public let insertedAssets: Int
 }

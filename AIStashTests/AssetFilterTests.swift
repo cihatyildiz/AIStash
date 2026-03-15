@@ -6,6 +6,7 @@
 // filteredAssets(from:selection:) method.
 
 import XCTest
+import SwiftData
 @testable import AIStashCore
 
 // NOTE: Because SwiftData @Model classes require a model context to be
@@ -91,6 +92,25 @@ final class AssetFilterTests: XCTestCase {
         let result = viewModel.filteredAssets(from: assets, selection: .smartFilter(.archive))
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result.first?.title, "B")
+    }
+
+    @MainActor
+    func test_deleteAsset_doesNotDeleteLockedAsset() throws {
+        let schema = Schema([Asset.self, Folder.self, Tag.self])
+        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: schema, configurations: [config])
+        let context = container.mainContext
+
+        let asset = Asset(title: "Protected", type: .note, isLocked: true)
+        context.insert(asset)
+        try context.save()
+
+        viewModel.selectedAsset = asset
+        viewModel.deleteAsset(asset, in: context)
+
+        let fetched = try context.fetch(FetchDescriptor<Asset>())
+        XCTAssertEqual(fetched.count, 1)
+        XCTAssertEqual(viewModel.selectedAsset?.id, asset.id)
     }
 
     // MARK: - Helpers

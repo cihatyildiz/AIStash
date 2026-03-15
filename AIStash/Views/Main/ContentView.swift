@@ -27,6 +27,7 @@ struct ContentView: View {
     // MARK: - Sheet State
 
     @State private var isShowingImportExport: Bool = false
+    @State private var importExportLaunchAction: ImportExportLaunchAction = .none
 
     // MARK: - Data
 
@@ -64,6 +65,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .secondaryAction) {
                     Button {
+                        importExportLaunchAction = .none
                         isShowingImportExport = true
                     } label: {
                         Image(systemName: "arrow.up.arrow.down.circle")
@@ -74,7 +76,7 @@ struct ContentView: View {
         }
         // Import/Export Sheet
         .sheet(isPresented: $isShowingImportExport) {
-            ImportExportView()
+            ImportExportView(launchAction: importExportLaunchAction)
         }
         // Cmd+N from menu bar
         .onReceive(NotificationCenter.default.publisher(for: .createNewAsset)) { _ in
@@ -86,10 +88,20 @@ struct ContentView: View {
         }
         // Cmd+Shift+E from menu bar
         .onReceive(NotificationCenter.default.publisher(for: .exportAssets)) { _ in
+            importExportLaunchAction = .exportAssets
             isShowingImportExport = true
         }
         // Cmd+Shift+I from menu bar
         .onReceive(NotificationCenter.default.publisher(for: .importAssets)) { _ in
+            importExportLaunchAction = .importAssets
+            isShowingImportExport = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .saveLibraryFile)) { _ in
+            importExportLaunchAction = .saveLibrary
+            isShowingImportExport = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openLibraryFile)) { _ in
+            importExportLaunchAction = .openLibrary
             isShowingImportExport = true
         }
         .onAppear {
@@ -97,6 +109,11 @@ struct ContentView: View {
         }
         .onChange(of: allAssets.count) { _, _ in
             selectDefaultAssetIfNeeded()
+        }
+        .onChange(of: isShowingImportExport) { _, isShowing in
+            if !isShowing {
+                importExportLaunchAction = .none
+            }
         }
     }
 

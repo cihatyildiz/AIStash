@@ -30,6 +30,7 @@ public final class Asset {
 
     public var isFavorite: Bool
     public var isArchived: Bool
+    public var isLocked: Bool?
 
     // MARK: - Relationships
 
@@ -76,6 +77,7 @@ public final class Asset {
         type: AssetType = .note,
         isFavorite: Bool = false,
         isArchived: Bool = false,
+        isLocked: Bool = false,
         folder: Folder? = nil,
         tags: [Tag] = [],
         metadata: [String: String] = [:]
@@ -88,6 +90,7 @@ public final class Asset {
         self.modificationDate = Date()
         self.isFavorite = isFavorite
         self.isArchived = isArchived
+        self.isLocked = isLocked
         self.folder = folder
         self.tags = tags
         self.metadataJSON = try? JSONEncoder().encode(metadata)

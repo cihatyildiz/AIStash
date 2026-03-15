@@ -11,10 +11,22 @@ struct AppCommands: Commands {
     var body: some Commands {
         // File menu additions
         CommandGroup(replacing: .newItem) {
+            Button("Open Library…") {
+                NotificationCenter.default.post(name: .openLibraryFile, object: nil)
+            }
+            .keyboardShortcut("o", modifiers: .command)
+
             Button("New Asset") {
                 NotificationCenter.default.post(name: .createNewAsset, object: nil)
             }
             .keyboardShortcut("n", modifiers: .command)
+        }
+
+        CommandGroup(replacing: .saveItem) {
+            Button("Save Library As…") {
+                NotificationCenter.default.post(name: .saveLibraryFile, object: nil)
+            }
+            .keyboardShortcut("s", modifiers: .command)
         }
 
         CommandGroup(after: .importExport) {
@@ -35,6 +47,8 @@ struct AppCommands: Commands {
 
 extension Notification.Name {
     static let createNewAsset = Notification.Name("createNewAsset")
+    static let openLibraryFile = Notification.Name("openLibraryFile")
+    static let saveLibraryFile = Notification.Name("saveLibraryFile")
     static let importAssets   = Notification.Name("importAssets")
     static let exportAssets   = Notification.Name("exportAssets")
 }

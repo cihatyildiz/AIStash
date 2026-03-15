@@ -61,6 +61,19 @@ final class ImportExportTests: XCTestCase {
         XCTAssertEqual(bundle.assets.first?.metadata["temp"], "0.5")
     }
 
+    func test_exportPreservesLockState() throws {
+        let asset = Asset(title: "Locked Asset", type: .note, isLocked: true)
+        context.insert(asset)
+        try context.save()
+
+        let data = try service.exportAll(assets: [asset], folders: [], tags: [])
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let bundle = try decoder.decode(ExportBundle.self, from: data)
+
+        XCTAssertEqual(bundle.assets.first?.isLocked, true)
+    }
+
     // MARK: - Import Tests
 
     func test_importBundle_insertsNewAssets() throws {
@@ -116,14 +129,15 @@ final class ImportExportTests: XCTestCase {
                     content: "Body",
                     type: AssetType.note.rawValue,
                     creationDate: Date(),
-                    modificationDate: Date(),
-                    isFavorite: false,
-                    isArchived: false,
-                    folderID: importedFolderID,
-                    folderName: "Shared",
-                    tagIDs: [importedTagID],
-                    tags: ["shared"],
-                    metadata: [:]
+                modificationDate: Date(),
+                isFavorite: false,
+                isArchived: false,
+                isLocked: false,
+                folderID: importedFolderID,
+                folderName: "Shared",
+                tagIDs: [importedTagID],
+                tags: ["shared"],
+                metadata: [:]
                 )
             ],
             folders: [
@@ -145,5 +159,45 @@ final class ImportExportTests: XCTestCase {
         let importedAsset = try XCTUnwrap(fetchedAssets.first(where: { $0.id == importedAssetID }))
         XCTAssertEqual(importedAsset.folder?.id, importedFolderID)
         XCTAssertEqual(importedAsset.tags.map(\.id), [importedTagID])
+    }
+
+    func test_importBundle_restoresLockState() throws {
+        let originalAsset = Asset(title: "Locked Import", type: .prompt, isLocked: true)
+        let data = try service.exportAll(assets: [originalAsset], folders: [], tags: [])
+
+        let result = try service.importBundle(from: data, into: context)
+        XCTAssertEqual(result.inserted, 1)
+
+        let fetched = try context.fetch(FetchDescriptor<Asset>())
+        XCTAssertEqual(fetched.first?.isLocked, true)
+    }
+
+    func test_replaceLibrary_replacesExistingData() throws {
+        let existingFolder = Folder(name: "Existing", iconName: "folder", colorHex: "#101010")
+        let existingTag = Tag(name: "legacy", colorHex: "#202020")
+        let existingAsset = Asset(title: "Old Asset", type: .note, folder: existingFolder, tags: [existingTag])
+        context.insert(existingFolder)
+        context.insert(existingTag)
+        context.insert(existingAsset)
+        try context.save()
+
+        let importedFolder = Folder(id: UUID(), name: "Imported", iconName: "tray", colorHex: "#ABCDEF", order: 1)
+        let importedTag = Tag(id: UUID(), name: "fresh", colorHex: "#FEDCBA")
+        let importedAsset = Asset(id: UUID(), title: "New Asset", content: "Body", type: .prompt, folder: importedFolder, tags: [importedTag])
+        let data = try service.exportAll(assets: [importedAsset], folders: [importedFolder], tags: [importedTag])
+
+        let result = try service.replaceLibrary(from: data, into: context)
+        XCTAssertEqual(result.deletedAssets, 1)
+        XCTAssertEqual(result.deletedFolders, 1)
+        XCTAssertEqual(result.deletedTags, 1)
+        XCTAssertEqual(result.insertedAssets, 1)
+
+        let fetchedAssets = try context.fetch(FetchDescriptor<Asset>())
+        let fetchedFolders = try context.fetch(FetchDescriptor<Folder>())
+        let fetchedTags = try context.fetch(FetchDescriptor<Tag>())
+
+        XCTAssertEqual(fetchedAssets.map(\.title), ["New Asset"])
+        XCTAssertEqual(fetchedFolders.map(\.name), ["Imported"])
+        XCTAssertEqual(fetchedTags.map(\.name), ["fresh"])
     }
 }
